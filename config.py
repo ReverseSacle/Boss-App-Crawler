@@ -18,12 +18,24 @@ device_name = '6a29887'
 adb = f'adb -s {device_name}'
 ############################# Appium #############################
 
+############################ Paddle model ########################
+# 这里吐槽一句，使用轻量版model，文本内容中有 某为 公司就TM文本检测到了
+# 为此这里可选用高精度模型，但耗时更长了
+# det_model_dir = './model/ch_PP-OCRv4_det_server_infer'
+# rec_model_dir = './model/ch_PP-OCRv4_rec_server_infer'
+############################ Paddle model ########################
+
 
 #################################################################
 # 职位过滤器
 job_key = 'C++后端'
 # ["综合排序","最新优先","匹配度优先"]
 order_require = '匹配度优先'
+
+# 文本分类的分隔关键字
+job_area_element = '东莞'
+job_company_element = ['人·', '人以上·']
+
 
 # 图标定位所需的图片
 img_path = './img'
@@ -38,10 +50,6 @@ collect_full_img_path = f'{img_path}/collect_full.png'
 share_button_img_path = f'{img_path}/share_button.png'
 reload_button_img_path = f'{img_path}/reload_button.png'
 retry_button_img_path = f'{img_path}/retry_button.png'
-
-# 文本分类的分隔关键字
-job_area_element = '广州'
-job_company_element = ['人·', '人以上·']
 
 #################################################################
 

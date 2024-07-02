@@ -5,7 +5,6 @@ import os
 class SaveToExcel:
     def __init__(self,overlap=False):
         file_name = './output/boss_crawl_output.xlsx'
-        if not os.path.exists('./output'): os.mkdir('./output')
         if not overlap:
             counter = 1
             while os.path.exists(file_name):

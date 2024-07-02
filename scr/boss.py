@@ -7,10 +7,11 @@ from config import boss_appPackage, boss_appActivity, job_key, order_require, \
 from tool.adb_event import stop_app, open_app, tap, edge_scroll, input_text, screenshot, get_clipboard, \
     switch_to_clipper, switch_to_adbkey, switch_off_adbkey, connect_device, horizon_swipe, switch_off_clipper
 from tool.image_event import element_match, wait_for_element, tap_until
-from paddleocr import PaddleOCR
 from scr.save_to_excel import SaveToExcel
-
+from paddleocr import PaddleOCR
 from PIL import Image
+# from config import det_model_dir, rec_model_dir
+
 import numpy as np
 
 """
@@ -32,7 +33,14 @@ class BossProcess:
             lang='ch',
             ir_optim=False
         )
-
+        # self.ocr = PaddleOCR(
+        #     use_angle_clse=True,
+        #     use_gpu=False,
+        #     lang='ch',
+        #     ir_optim=False,
+        #     det_model_dir=det_model_dir,
+        #     rec_model_dir=rec_model_dir
+        # )
         connect_device()
         switch_to_clipper()
         switch_to_adbkey()
@@ -86,16 +94,12 @@ class BossProcess:
     def image_recognize(self):
         print('BossProcess::image_recognize event => ....')
         # 查找`查看更多`
-        count = 2
-        while count:
-            edge_scroll(y=-700, slow_down=True, duration=600)
-            more_button = element_match(more_img_path)
-            if more_button[2] > 0.7:
-                tap(more_button[0], more_button[1])
-                break
-            self.check_if_in_page()
+        edge_scroll(y=-1000, duration=100)
+        edge_scroll(y=700, slow_down=True)
+        more_button = element_match(more_img_path)
+        if more_button[2] > 0.7:
+            tap(more_button[0], more_button[1])
 
-            count -= 1
         edge_scroll(y=1000, slow_down=True, duration=50)
         self.check_if_in_page()
 
@@ -139,7 +143,7 @@ class BossProcess:
         while True:
             if switcher:
                 edge_scroll(y=-700, slow_down=True, duration=300)
-                edge_scroll(y=400, slow_down=True, duration=400)
+                edge_scroll(y=300, slow_down=True, duration=400)
             else: edge_scroll(y=400, slow_down=True, duration=400)
             self.check_if_in_page()
 
@@ -170,7 +174,9 @@ class BossProcess:
                     idx += 1
                 break
             last_content = result[0][length - 1][1][0]
-            if '你的竞争力分析' in job_content or '添加住址' in job_content:
+            if ('你的竞争力分析' in job_content or
+                    '添加住址' in job_content or
+                    'BOSS安全提示' in job_content):
                 switcher = False
 
         return [
