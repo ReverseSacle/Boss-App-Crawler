@@ -4,7 +4,7 @@ from config import boss_appPackage, boss_appActivity, job_key, order_require, \
     reload_button_img_path, collect_full_img_path, home_search_button_img_path, history_img_path, \
     retry_button_img_path, home_search_button, order_button, order_button_method, \
     share_button_link, three_point_button, center_point_button, back_button
-from tool.adb_event import stop_app, open_app, tap, dege_scroll, input_text, screenshot, get_clipboard, \
+from tool.adb_event import stop_app, open_app, tap, edge_scroll, input_text, screenshot, get_clipboard, \
     switch_to_clipper, switch_to_adbkey, switch_off_adbkey, connect_device, horizon_swipe, switch_off_clipper
 from tool.image_event import element_match, wait_for_element, tap_until
 from paddleocr import PaddleOCR
@@ -71,7 +71,7 @@ class BossProcess:
 
         order_method = order_button_method[order_require]
         tap(order_method[0], order_method[1])
-        dege_scroll(y=-100, slow_down=True)
+        edge_scroll(y=-100, slow_down=True)
 
     def check_if_in_page(self):
         if element_match(collect_empty_img_path)[2] < 0.7 and \
@@ -88,7 +88,7 @@ class BossProcess:
         # 查找`查看更多`
         count = 2
         while count:
-            dege_scroll(y=-700, slow_down=True, duration=600)
+            edge_scroll(y=-700, slow_down=True, duration=600)
             more_button = element_match(more_img_path)
             if more_button[2] > 0.7:
                 tap(more_button[0], more_button[1])
@@ -96,7 +96,7 @@ class BossProcess:
             self.check_if_in_page()
 
             count -= 1
-        dege_scroll(y=1000, slow_down=True, duration=50)
+        edge_scroll(y=1000, slow_down=True, duration=50)
         self.check_if_in_page()
 
         screenshot()
@@ -138,9 +138,9 @@ class BossProcess:
         switcher = True
         while True:
             if switcher:
-                dege_scroll(y=-700, slow_down=True, duration=300)
-                dege_scroll(y=400, slow_down=True, duration=400)
-            else: dege_scroll(y=400, slow_down=True, duration=400)
+                edge_scroll(y=-700, slow_down=True, duration=300)
+                edge_scroll(y=400, slow_down=True, duration=400)
+            else: edge_scroll(y=400, slow_down=True, duration=400)
             self.check_if_in_page()
 
             screenshot()

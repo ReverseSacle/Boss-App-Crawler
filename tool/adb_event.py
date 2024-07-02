@@ -29,7 +29,7 @@ def horizon_swipe(switcher=False,duration=200):
     os.system(f"{adb} shell input swipe {x1} {y1} {x1 + x_bias} {y1} {duration}")
 
 # 沿着边缘滑动，防止误触
-def dege_scroll(y,slow_down=False,duration=500):
+def edge_scroll(y,slow_down=False,duration=500):
     # 向上滑动y为负数，向下滑动y为正数，即模拟手指上滑为负，手指下滑为正
     x1 = resolution[0]
     y1 = resolution[1]
